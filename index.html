@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Central de Simulados - Concursos Públicos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #0b2b3d 0%, #1a4b6d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .main-container {
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        
+        .header h1 span {
+            color: #ffcc00;
+        }
+        
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .simulados-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+            border: 4px solid #ffcc00;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 40px rgba(0,0,0,0.4);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: #ffcc00;
+        }
+        
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #0b2b3d;
+        }
+        
+        .card-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .card-details {
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .detail-item span {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        
+        .tag {
+            background: #e6f0fa;
+            color: #0b2b3d;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #ffcc00;
+        }
+        
+        .card-button {
+            background: #0b2b3d;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 3px solid #ffcc00;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .card-button:hover {
+            background: #ffcc00;
+            color: #0b2b3d;
+            transform: scale(1.02);
+        }
+        
+        .card-button.secondary {
+            background: #ffcc00;
+            color: #0b2b3d;
+        }
+        
+        .card-button.secondary:hover {
+            background: #0b2b3d;
+            color: white;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: white;
+            padding: 20px;
+            border-top: 2px solid rgba(255,204,0,0.3);
+        }
+        
+        .footer p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .stats-badge {
+            background: #ffcc00;
+            color: #0b2b3d;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .header p {
+                font-size: 18px;
+            }
+            
+            .simulados-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>📚 <span>Central de Simulados</span> 🎯</h1>
+            <p>Prepare-se para concursos públicos com nossos simulados estilo CEBRASPE (Certo/Errado). Escolha sua área e comece agora mesmo!</p>
+        </div>
+
+        <div class="simulados-grid">
+            <!-- CARD 1: INSS - TÉCNICO DO SEGURO SOCIAL -->
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <div class="card-title">INSS - TÉCNICO</div>
+                <div class="card-subtitle">Técnico do Seguro Social</div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span>📝</span> 30 questões estilo CEBRASPE
+                    </div>
+                    <div class="detail-item">
+                        <span>⏱️</span> 70 segundos por questão
+                    </div>
+                    <div class="detail-item">
+                        <span>📊</span> Ética, Direito, Seguridade Social
+                    </div>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">ÉTICA</span>
+                    <span class="tag">SEGURIDADE</span>
+                    <span class="tag">RGPS</span>
+                    <span class="tag">LEI 8.112</span>
+                </div>
+                <a href="https://simuladodeprovas.github.io/insssimulado/" class="card-button" target="_blank">▶ ACESSAR SIMULADO</a>
+                <div style="margin-top: 10px; text-align: center;">
+                    <span class="stats-badge">🏛️ INSS</span>
+                </div>
+            </div>
+
+            <!-- CARD 2: DIREITO CONSTITUCIONAL/ADMINISTRATIVO -->
+            <div class="card">
+                <div class="card-icon">⚖️</div>
+                <div class="card-title">DIREITO</div>
+                <div class="card-subtitle">Constitucional / Administrativo</div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span>📝</span> 20 questões estilo CEBRASPE
+                    </div>
+                    <div class="detail-item">
+                        <span>⏱️</span> 60 segundos por questão
+                    </div>
+                    <div class="detail-item">
+                        <span>📊</span> Nível iniciante / intermediário
+                    </div>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">CF/88</span>
+                    <span class="tag">ADMINISTRATIVO</span>
+                    <span class="tag">PRINCÍPIOS</span>
+                    <span class="tag">ATOS</span>
+                </div>
+                <a href="https://simuladodeprovas.github.io/constitucional_Administrativo/" class="card-button" target="_blank">▶ ACESSAR SIMULADO</a>
+                <div style="margin-top: 10px; text-align: center;">
+                    <span class="stats-badge">⚖️ Direito</span>
+                </div>
+            </div>
+
+            <!-- CARD 3: PF - AGENTE ADMINISTRATIVO -->
+            <div class="card">
+                <div class="card-icon">🚔</div>
+                <div class="card-title">POLÍCIA FEDERAL</div>
+                <div class="card-subtitle">Agente Administrativo</div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span>📝</span> 120 questões estilo CEBRASPE
+                    </div>
+                    <div class="detail-item">
+                        <span>⏱️</span> 70 segundos por questão
+                    </div>
+                    <div class="detail-item">
+                        <span>📊</span> 15 disciplinas completas
+                    </div>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">PORTUGUÊS</span>
+                    <span class="tag">INFORMÁTICA</span>
+                    <span class="tag">DIREITO</span>
+                    <span class="tag">GESTÃO</span>
+                </div>
+                <a href="https://simuladodeprovas.github.io/policiafederal/" class="card-button" target="_blank">▶ ACESSAR SIMULADO</a>
+                <div style="margin-top: 10px; text-align: center;">
+                    <span class="stats-badge">👮 PF</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINHA DE SIMULADOS FUTUROS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 25px;">
+            <!-- CARD 4: (reservado para futuro simulado) -->
+            <div class="card" style="opacity: 0.7; background: #f5f5f5;">
+                <div class="card-icon">📌</div>
+                <div class="card-title">EM BREVE</div>
+                <div class="card-subtitle">Novos simulados estão sendo preparados</div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span>🔜</span> Próximas atualizações
+                    </div>
+                    <div class="detail-item">
+                        <span>📝</span> Mais concursos em breve
+                    </div>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">AGUARDE</span>
+                    <span class="tag">NOVO</span>
+                </div>
+                <button class="card-button" style="background: #ccc; border-color: #999; cursor: default;" disabled>EM DESENVOLVIMENTO</button>
+            </div>
+
+            <!-- CARD 5: (reservado para futuro simulado) -->
+            <div class="card" style="opacity: 0.7; background: #f5f5f5;">
+                <div class="card-icon">🔜</div>
+                <div class="card-title">EM BREVE</div>
+                <div class="card-subtitle">Novos simulados estão sendo preparados</div>
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span>🔜</span> Próximas atualizações
+                    </div>
+                    <div class="detail-item">
+                        <span>📝</span> Mais concursos em breve
+                    </div>
+                </div>
+                <div class="card-tags">
+                    <span class="tag">AGUARDE</span>
+                    <span class="tag">NOVO</span>
+                </div>
+                <button class="card-button" style="background: #ccc; border-color: #999; cursor: default;" disabled>EM DESENVOLVIMENTO</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📌 Todos os simulados seguem o formato <strong>CEBRASPE (Certo/Errado)</strong> - sem pontuação negativa</p>
+            <p>⏱️ Os timers simulam o tempo real de prova para melhor preparação</p>
+            <p>📱 Simulados 100% responsivos - funcionam em celulares, tablets e computadores</p>
+            <p>🔗 Links atualizados em: <strong>Fevereiro 2026</strong></p>
+            <p>🚀 <a href="#">Adicione este site aos favoritos</a> para acompanhar novos simulados</p>
+        </div>
+    </div>
+
+    <script>
+        // Atualiza o ano automaticamente no footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>
